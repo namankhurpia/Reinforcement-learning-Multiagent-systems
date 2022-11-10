@@ -174,7 +174,7 @@ class MariosBros(gym.Env):
 
         info = {}
 
-        return observation_mario,observation_luigi, reward_mario, reward_luigi, done_mario, done_luigi, info
+        return observation_mario, observation_luigi, reward_mario, reward_luigi, done_mario, done_luigi, info
 
 
     def reset(self):
@@ -232,11 +232,18 @@ class MariosBros(gym.Env):
             
             #fulllist = [plot_mario,plot_luigi, plot_plant, plot_princess, plot_one_up, plot_jump, plot_tortoise])
             
+            print('plot mario',plot_mario , ',plot luigi:',plot_luigi)
+            
             # Plot for mario.
             if plot_mario and \
                     all(not item for item in [plot_luigi, plot_plant, plot_princess, plot_one_up, plot_jump, plot_tortoise]):
                 mario = AnnotationBbox(OffsetImage(plt.imread('./images/mario.png'), zoom=0.28),np.add(plot_pos, [0.5, 0.5]), frameon=False)
                 ax.add_artist(mario)
+                
+                if plot_luigi and \
+                        all(not item for item in [plot_mario, plot_plant, plot_princess, plot_one_up, plot_jump, plot_tortoise]):
+                    luigi = AnnotationBbox(OffsetImage(plt.imread('./images/luigi.png'), zoom=0.28),np.add(plot_pos, [0.5, 0.5]), frameon=False)
+                    ax.add_artist(luigi)
                 
     
             # Plot for Luigi.
@@ -244,6 +251,11 @@ class MariosBros(gym.Env):
                     all(not item for item in [plot_mario, plot_plant, plot_princess, plot_one_up, plot_jump, plot_tortoise]):
                 luigi = AnnotationBbox(OffsetImage(plt.imread('./images/luigi.png'), zoom=0.28),np.add(plot_pos, [0.5, 0.5]), frameon=False)
                 ax.add_artist(luigi)
+                
+                if plot_mario and \
+                        all(not item for item in [plot_luigi, plot_plant, plot_princess, plot_one_up, plot_jump, plot_tortoise]):
+                    mario = AnnotationBbox(OffsetImage(plt.imread('./images/mario.png'), zoom=0.28),np.add(plot_pos, [0.5, 0.5]), frameon=False)
+                    ax.add_artist(mario)
 
 
             # Plot for Plant.
@@ -279,17 +291,24 @@ class MariosBros(gym.Env):
 
 
             # Plot for mario and one_up.
-            elif all(item for item in [plot_mario, plot_one_up]) and \
-                    all(not item for item in [plot_luigi, plot_plant, plot_princess, plot_jump, plot_tortoise]):
+            elif all(item for item in [plot_mario, plot_one_up]) and all(not item for item in [plot_luigi, plot_plant, plot_princess, plot_jump, plot_tortoise]):
                 mario_one_up = AnnotationBbox(OffsetImage(plt.imread('./images/mario_oneup.png'), zoom=0.28), np.add(plot_pos, [0.5, 0.5]), frameon=False)
                 ax.add_artist(mario_one_up)
                 
+                # Plot for luigi and one_up.
+                if all(item for item in [plot_luigi, plot_one_up]) and all(not item for item in [plot_mario, plot_plant, plot_princess, plot_jump, plot_tortoise]):
+                    luigi_one_up = AnnotationBbox(OffsetImage(plt.imread('./images/luigi_oneup.png'), zoom=0.28), np.add(plot_pos, [0.5, 0.5]), frameon=False)
+                    ax.add_artist(luigi_one_up)
+                
         
             # Plot for luigi and one_up.
-            elif all(item for item in [plot_luigi, plot_one_up]) and \
-                    all(not item for item in [plot_mario, plot_plant, plot_princess, plot_jump, plot_tortoise]):
+            elif all(item for item in [plot_luigi, plot_one_up]) and all(not item for item in [plot_mario, plot_plant, plot_princess, plot_jump, plot_tortoise]):
                 luigi_one_up = AnnotationBbox(OffsetImage(plt.imread('./images/luigi_oneup.png'), zoom=0.28), np.add(plot_pos, [0.5, 0.5]), frameon=False)
                 ax.add_artist(luigi_one_up)
+                
+                if all(item for item in [plot_mario, plot_one_up]) and all(not item for item in [plot_luigi, plot_plant, plot_princess, plot_jump, plot_tortoise]):
+                    mario_one_up = AnnotationBbox(OffsetImage(plt.imread('./images/mario_oneup.png'), zoom=0.28), np.add(plot_pos, [0.5, 0.5]), frameon=False)
+                    ax.add_artist(mario_one_up)
                 
            
                 
@@ -299,6 +318,7 @@ class MariosBros(gym.Env):
                 mario_princess = AnnotationBbox(OffsetImage(plt.imread('./images/princess.png'), zoom=0.28), np.add(plot_pos, [0.5, 0.5]), frameon=False)
                 ax.add_artist(mario_princess)
                 exit()
+                
                 
              # Plot for luigi and princess.
             elif all(item for item in [plot_luigi, plot_princess]) and \
@@ -313,12 +333,23 @@ class MariosBros(gym.Env):
                  mario_plant = AnnotationBbox(OffsetImage(plt.imread('./images/mario_plant.png'), zoom=0.28), np.add(plot_pos, [0.5, 0.5]), frameon=False)
                  ax.add_artist(mario_plant)
                  
+                 # Plot for luigi and plant.
+                 if all(item for item in [plot_luigi, plot_plant]) and \
+                          all(not item for item in [plot_mario, plot_princess, plot_one_up, plot_jump, plot_tortoise]):
+                      luigi_plant = AnnotationBbox(OffsetImage(plt.imread('./images/luigi_plant.png'), zoom=0.28), np.add(plot_pos, [0.5, 0.5]), frameon=False)
+                      ax.add_artist(luigi_plant)
+                 
     
             # Plot for luigi and plant.
             elif all(item for item in [plot_luigi, plot_plant]) and \
                      all(not item for item in [plot_mario, plot_princess, plot_one_up, plot_jump, plot_tortoise]):
                  luigi_plant = AnnotationBbox(OffsetImage(plt.imread('./images/luigi_plant.png'), zoom=0.28), np.add(plot_pos, [0.5, 0.5]), frameon=False)
                  ax.add_artist(luigi_plant)
+                 
+                 if all(item for item in [plot_mario, plot_plant]) and \
+                          all(not item for item in [plot_luigi, plot_princess, plot_one_up, plot_jump, plot_tortoise]):
+                      mario_plant = AnnotationBbox(OffsetImage(plt.imread('./images/mario_plant.png'), zoom=0.28), np.add(plot_pos, [0.5, 0.5]), frameon=False)
+                      ax.add_artist(mario_plant)
                  
 
             # Plot for mario and jump.
@@ -327,28 +358,47 @@ class MariosBros(gym.Env):
                 mario_jump = AnnotationBbox(OffsetImage(plt.imread('./images/mario_jump.png'), zoom=0.28), np.add(plot_pos, [0.5, 0.5]), frameon=False)
                 ax.add_artist(mario_jump)
                 
+                # Plot for luigi and jump.
+                if all(item for item in [plot_luigi, plot_jump]) and \
+                        all(not item for item in [plot_luigi, plot_plant, plot_princess, plot_one_up, plot_tortoise]):
+                    luigi_jump = AnnotationBbox(OffsetImage(plt.imread('./images/luigi_jump.png'), zoom=0.28), np.add(plot_pos, [0.5, 0.5]), frameon=False)
+                    ax.add_artist(luigi_jump)
+                
             # Plot for luigi and jump.
             elif all(item for item in [plot_luigi, plot_jump]) and \
                     all(not item for item in [plot_luigi, plot_plant, plot_princess, plot_one_up, plot_tortoise]):
                 luigi_jump = AnnotationBbox(OffsetImage(plt.imread('./images/luigi_jump.png'), zoom=0.28), np.add(plot_pos, [0.5, 0.5]), frameon=False)
                 ax.add_artist(luigi_jump)
                 
+                if all(item for item in [plot_mario, plot_jump]) and \
+                        all(not item for item in [plot_luigi, plot_plant, plot_princess, plot_one_up, plot_tortoise]):
+                    mario_jump = AnnotationBbox(OffsetImage(plt.imread('./images/mario_jump.png'), zoom=0.28), np.add(plot_pos, [0.5, 0.5]), frameon=False)
+                    ax.add_artist(mario_jump)
+                
                 
 
-            #need res
             # Plot for mario, plant and jump.            
             elif all(item for item in [plot_mario, plot_plant, plot_jump]) and \
                     all(not item for item in [plot_luigi, plot_princess, plot_one_up, plot_tortoise]):
                 mario_plant_jump = AnnotationBbox(OffsetImage(plt.imread('./images/mario_plant_jump.png'), zoom=0.28), np.add(plot_pos, [0.5, 0.5]), frameon=False)
                 ax.add_artist(mario_plant_jump)
                 
+                if all(item for item in [plot_luigi, plot_plant, plot_jump]) and \
+                        all(not item for item in [plot_mario, plot_princess, plot_one_up, plot_tortoise]):
+                    luigi_plant_jump = AnnotationBbox(OffsetImage(plt.imread('./images/luigi_plant_jump.png'), zoom=0.28), np.add(plot_pos, [0.5, 0.5]), frameon=False)
+                    ax.add_artist(luigi_plant_jump)
+                
         
-            #need res
             # Plot for luigi, plant and jump.            
             elif all(item for item in [plot_luigi, plot_plant, plot_jump]) and \
                     all(not item for item in [plot_mario, plot_princess, plot_one_up, plot_tortoise]):
                 luigi_plant_jump = AnnotationBbox(OffsetImage(plt.imread('./images/luigi_plant_jump.png'), zoom=0.28), np.add(plot_pos, [0.5, 0.5]), frameon=False)
                 ax.add_artist(luigi_plant_jump)
+                
+                if all(item for item in [plot_mario, plot_plant, plot_jump]) and \
+                        all(not item for item in [plot_luigi, plot_princess, plot_one_up, plot_tortoise]):
+                    mario_plant_jump = AnnotationBbox(OffsetImage(plt.imread('./images/mario_plant_jump.png'), zoom=0.28), np.add(plot_pos, [0.5, 0.5]), frameon=False)
+                    ax.add_artist(mario_plant_jump)
                 
 
             # Plot for mario and tortoise.
@@ -357,11 +407,21 @@ class MariosBros(gym.Env):
                 mario_tortoise = AnnotationBbox(OffsetImage(plt.imread('./images/mario_tortoise.png'), zoom=0.28), np.add(plot_pos, [0.5, 0.5]), frameon=False)
                 ax.add_artist(mario_tortoise)
                 
+                if all(item for item in [plot_luigi, plot_tortoise]) and \
+                        all(not item for item in [plot_mario, plot_plant, plot_princess, plot_one_up, plot_jump]):
+                    luigi_tortoise = AnnotationBbox(OffsetImage(plt.imread('./images/luigi_tortoise.png'), zoom=0.28), np.add(plot_pos, [0.5, 0.5]), frameon=False)
+                    ax.add_artist(luigi_tortoise)
+                
             # Plot for luigi and tortoise.
             elif all(item for item in [plot_luigi, plot_tortoise]) and \
                     all(not item for item in [plot_mario, plot_plant, plot_princess, plot_one_up, plot_jump]):
                 luigi_tortoise = AnnotationBbox(OffsetImage(plt.imread('./images/luigi_tortoise.png'), zoom=0.28), np.add(plot_pos, [0.5, 0.5]), frameon=False)
                 ax.add_artist(luigi_tortoise)
+                
+                if all(item for item in [plot_mario, plot_tortoise]) and \
+                        all(not item for item in [plot_luigi, plot_plant, plot_princess, plot_one_up, plot_jump]):
+                    mario_tortoise = AnnotationBbox(OffsetImage(plt.imread('./images/mario_tortoise.png'), zoom=0.28), np.add(plot_pos, [0.5, 0.5]), frameon=False)
+                    ax.add_artist(mario_tortoise)
                 
 
             #res needed
