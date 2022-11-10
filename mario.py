@@ -232,7 +232,7 @@ class MariosBros(gym.Env):
             
             #fulllist = [plot_mario,plot_luigi, plot_plant, plot_princess, plot_one_up, plot_jump, plot_tortoise])
             
-            print('plot mario',plot_mario , ',plot luigi:',plot_luigi)
+            #print('plot mario',plot_mario , ',plot luigi:',plot_luigi)
             
             # Plot for mario.
             if plot_mario and \
@@ -247,7 +247,7 @@ class MariosBros(gym.Env):
                 
     
             # Plot for Luigi.
-            if plot_luigi and \
+            elif plot_luigi and \
                     all(not item for item in [plot_mario, plot_plant, plot_princess, plot_one_up, plot_jump, plot_tortoise]):
                 luigi = AnnotationBbox(OffsetImage(plt.imread('./images/luigi.png'), zoom=0.28),np.add(plot_pos, [0.5, 0.5]), frameon=False)
                 ax.add_artist(luigi)
